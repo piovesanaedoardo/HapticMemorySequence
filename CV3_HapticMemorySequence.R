@@ -3,6 +3,8 @@ library("dplyr")
 library("tidyr")
 library("tidyverse")
 library("data.table")
+library("xlsx")
+library("readxl")
 
 ## ------------------- U01CV3 -------------------
 ## copio dati da JSON
@@ -352,3 +354,17 @@ CV3 <- rbind(U01CV3_check_total, U02CV3_check_total, U03CV3_check_total,
              U04CV3_check_total, U05CV3_check_total, U06CV3_check_total,
              U07CV3_check_total, U08CV3_check_total, U09CV3_check_total,
              U10CV3_check_total, U11CV3_check_total, U12CV3_check_total)
+#rinomino le colonne
+colnames(CV3) <- c('Date', 'OBJ Position', 'Utente')
+
+write.xlsx(CV3, file = "CV3.xlsx",
+           sheetName = "CV3", append = FALSE)
+
+readxl::read_excel("C:/Users/Edoardo/Documents/HapticMemorySequence/CV3.xlsx",sheet = "CV3_def")
+
+##CV3$PosixDate <- as.POSIXct(CV3$Date, tz = "UTC", format = "%Y-%m-%dT%H:%M:%S:%OSZ")
+
+
+##CV3$MyDate <- as.Date(CV3$Date)
+
+##as.POSIXct(1.439165e+12/1000, origin = "1970-01-01", tz = "UTC")
