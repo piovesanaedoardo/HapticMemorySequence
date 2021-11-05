@@ -737,7 +737,7 @@ U12CV10_check_total <- rbind(U12CV10_check_Cube2, U12CV10_check_Capsule, U12CV10
 
 
 ## tabella finale
-SG10 <- rbind(U01SG10_check_total, U02SG10_check_total, U03SG10_check_total,
-             U04SG10_check_total, U05SG10_check_total, U06SG10_check_total,
-             U07SG10_check_total, U08SG10_check_total, U09SG10_check_total,
-             U10SG10_check_total, U11SG10_check_total, U12SG10_check_total)
+CV10 <- rbind(U01CV10_check_total, U02CV10_check_total, U03CV10_check_total,
+             U04CV10_check_total, U05CV10_check_total, U06CV10_check_total,
+             U07CV10_check_total, U08CV10_check_total, U09CV10_check_total,
+             U10CV10_check_total, U11CV10_check_total, U12CV10_check_total)
