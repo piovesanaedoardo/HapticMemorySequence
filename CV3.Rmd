@@ -1,3 +1,14 @@
+---
+title: "CV3_HMS"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# librerie
 library("jsonlite")
 library("dplyr")
 library("tidyr")
@@ -7,7 +18,10 @@ library("xlsx")
 library("readxl")
 library("gapminder")
 library("convertr")
+library("zoo")
+```
 
+```{r}
 ## ------------------- U01CV3 -------------------
 ## copio dati da JSON
 U01CV3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/CV/HapticMemorySequenceLog_2021_11_03_13_59_40_U01.json"))
@@ -35,7 +49,26 @@ U01CV3_check_sphere <- tail(sphereU01CV3, n = 1)
 
 U01CV3_check_total <- rbind(U01CV3_check_cylinder, U01CV3_check_cube, U01CV3_check_sphere)
 
+# magie sulla tab
+objPosU01CV <- U01CV3_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone)', 'Cylinder(Clone)', 'Sphere(Clone)') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
 
+colnames(objPosU01CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+
+objPosU01CV %>%
+  mutate(Cube = case_when(
+    endsWith(Cube, "true") ~ 1,
+    endsWith(Cube, "false") ~ 0
+  ))
+
+
+```
+
+```{r}
 ## ------------------- U02CV3 -------------------
 ## copio dati da JSON
 U02CV3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/CV/HapticMemorySequenceLog_2021_11_03_15_29_10_U02.json"))
@@ -65,7 +98,25 @@ U02CV3_check_sphere <- tail(sphereU02CV3, n = 1)
 
 U02CV3_check_total <- rbind(U02CV3_check_cylinder, U02CV3_check_cube, U02CV3_check_sphere)
 
+# magie sulla tab
+objPosU02CV <- U02CV3_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone)', 'Cylinder(Clone)', 'Sphere(Clone)') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
 
+colnames(objPosU02CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+
+objPosU02CV %>%
+  mutate(Cube = case_when(
+    endsWith(Cube, "true") ~ 1,
+    endsWith(Cube, "false") ~ 0
+  ))
+
+```
+
+```{r}
 ## ------------------- U03CV3 -------------------
 ## copio dati da JSON
 U03CV3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/CV/HapticMemorySequenceLog_2021_11_03_16_04_50_U03.json"))
@@ -95,7 +146,25 @@ U03CV3_check_sphere <- tail(sphereU03CV3, n = 1)
 
 U03CV3_check_total <- rbind(U03CV3_check_cylinder, U03CV3_check_cube, U03CV3_check_sphere)
 
+# magie sulla tab
+objPosU03CV <- U03CV3_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone)', 'Cylinder(Clone)', 'Sphere(Clone)') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
 
+colnames(objPosU03CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+
+objPosU03CV %>%
+  mutate(Cube = case_when(
+    endsWith(Cube, "true") ~ 1,
+    endsWith(Cube, "false") ~ 0
+  ))
+
+```
+
+```{r}
 ## ------------------- U04CV3 -------------------
 ## copio dati da JSON
 U04CV3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/CV/HapticMemorySequenceLog_2021_11_04_09_33_26_U04.json"))
@@ -123,7 +192,26 @@ U04CV3_check_sphere <- tail(sphereU04CV3, n = 1)
 
 U04CV3_check_total <- rbind(U04CV3_check_cylinder, U04CV3_check_cube, U04CV3_check_sphere)
 
+# magie sulla tab
+objPosU04CV <- U04CV3_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone)', 'Cylinder(Clone)', 'Sphere(Clone)') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
 
+colnames(objPosU04CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+
+objPosU04CV %>%
+  mutate(Cube = case_when(
+    endsWith(Cube, "true") ~ 1,
+    endsWith(Cube, "false") ~ 0
+  ))
+
+
+```
+
+```{r}
 ## ------------------- U05CV3 -------------------
 ## copio dati da JSON
 U05CV3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/CV/HapticMemorySequenceLog_2021_11_04_10_32_15_U05.json"))
@@ -151,7 +239,26 @@ U05CV3_check_sphere <- tail(sphereU05CV3, n = 1)
 
 U05CV3_check_total <- rbind(U05CV3_check_cylinder, U05CV3_check_cube, U05CV3_check_sphere)
 
+# magie sulla tab
+objPosU05CV <- U05CV3_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone)', 'Cylinder(Clone)', 'Sphere(Clone)') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
 
+colnames(objPosU05CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+
+objPosU05CV %>%
+  mutate(Cube = case_when(
+    endsWith(Cube, "true") ~ 1,
+    endsWith(Cube, "false") ~ 0
+  ))
+
+
+```
+
+```{r}
 ## ------------------- U06CV3 -------------------
 ## copio dati da JSON
 U06CV3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/CV/HapticMemorySequenceLog_2021_11_04_11_31_59_U06.json"))
@@ -179,7 +286,26 @@ U06CV3_check_sphere <- tail(sphereU06CV3, n = 1)
 
 U06CV3_check_total <- rbind(U06CV3_check_cylinder, U06CV3_check_cube, U06CV3_check_sphere)
 
+# magie sulla tab
+objPosU06CV <- U06CV3_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone)', 'Cylinder(Clone)', 'Sphere(Clone)') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
 
+colnames(objPosU06CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+
+objPosU06CV %>%
+  mutate(Cube = case_when(
+    endsWith(Cube, "true") ~ 1,
+    endsWith(Cube, "false") ~ 0
+  ))
+
+
+```
+
+```{r}
 ## ------------------- U07CV3 -------------------
 ## copio dati da JSON
 U07CV3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/CV/HapticMemorySequenceLog_2021_11_04_14_15_38_U07.json"))
@@ -207,6 +333,25 @@ U07CV3_check_sphere <- tail(sphereU07CV3, n = 1)
 
 U07CV3_check_total <- rbind(U07CV3_check_cylinder, U07CV3_check_cube, U07CV3_check_sphere)
 
+# magie sulla tab
+objPosU07CV <- U07CV3_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone)', 'Cylinder(Clone)', 'Sphere(Clone)') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
+
+colnames(objPosU07CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+
+objPosU07CV %>%
+  mutate(Cube = case_when(
+    endsWith(Cube, "true") ~ 1,
+    endsWith(Cube, "false") ~ 0
+  ))
+
+```
+
+```{r}
 ## ------------------- U08CV3 -------------------
 ## copio dati da JSON
 U08CV3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/CV/HapticMemorySequenceLog_2021_11_04_15_39_57_U08.json"))
@@ -234,7 +379,26 @@ U08CV3_check_sphere <- tail(sphereU08CV3, n = 1)
 
 U08CV3_check_total <- rbind(U08CV3_check_cylinder, U08CV3_check_cube, U08CV3_check_sphere)
 
+# magie sulla tab
+objPosU08CV <- U08CV3_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone)', 'Cylinder(Clone)', 'Sphere(Clone)') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
 
+colnames(objPosU08CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+
+objPosU08CV %>%
+  mutate(Cube = case_when(
+    endsWith(Cube, "true") ~ 1,
+    endsWith(Cube, "false") ~ 0
+  ))
+
+
+```
+
+```{r}
 ## ------------------- U09CV3 -------------------
 ## copio dati da JSON
 U09CV3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/CV/HapticMemorySequenceLog_2021_11_04_16_22_58_U09.json"))
@@ -261,6 +425,27 @@ sphereU09CV3 <- objectsPositionU09CV3[objectsPositionU09CV3$objPosition %like% "
 U09CV3_check_sphere <- tail(sphereU09CV3, n = 1)
 
 U09CV3_check_total <- rbind(U09CV3_check_cylinder, U09CV3_check_cube, U09CV3_check_sphere)
+
+# magie sulla tab
+objPosU09CV <- U09CV3_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone)', 'Cylinder(Clone)', 'Sphere(Clone)') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
+
+colnames(objPosU09CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+
+objPosU09CV %>%
+  mutate(Cube = case_when(
+    endsWith(Cube, "true") ~ 1,
+    endsWith(Cube, "false") ~ 0
+  ))
+
+
+```
+
+```{r}
 ## ------------------- U10CV3 -------------------
 ## copio dati da JSON
 U10CV3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/CV/HapticMemorySequenceLog_2021_11_05_09_51_39_U10.json"))
@@ -288,7 +473,26 @@ U10CV3_check_sphere <- tail(sphereU10CV3, n = 1)
 
 U10CV3_check_total <- rbind(U10CV3_check_cylinder, U10CV3_check_cube, U10CV3_check_sphere)
 
+# magie sulla tab
+objPosU10CV <- U10CV3_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone)', 'Cylinder(Clone)', 'Sphere(Clone)') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
 
+colnames(objPosU10CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+
+objPosU10CV %>%
+  mutate(Cube = case_when(
+    endsWith(Cube, "true") ~ 1,
+    endsWith(Cube, "false") ~ 0
+  ))
+
+
+```
+
+```{r}
 ## ------------------- U11CV3 -------------------
 ## copio dati da JSON
 U11CV3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/CV/HapticMemorySequenceLog_2021_11_05_10_59_30_U11.json"))
@@ -316,7 +520,26 @@ U11CV3_check_sphere <- tail(sphereU11CV3, n = 1)
 
 U11CV3_check_total <- rbind(U11CV3_check_cylinder, U11CV3_check_cube, U11CV3_check_sphere)
 
+# magie sulla tab
+objPosU11CV <- U11CV3_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone)', 'Cylinder(Clone)', 'Sphere(Clone)') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
 
+colnames(objPosU11CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+
+objPosU11CV %>%
+  mutate(Cube = case_when(
+    endsWith(Cube, "true") ~ 1,
+    endsWith(Cube, "false") ~ 0
+  ))
+
+
+```
+
+```{r}
 ## ------------------- U12CV3 -------------------
 ## copio dati da JSON
 U12CV3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/CV/HapticMemorySequenceLog_2021_11_05_11_51_58_U12.json"))
@@ -344,35 +567,65 @@ U12CV3_check_sphere <- tail(sphereU12CV3, n = 1)
 
 U12CV3_check_total <- rbind(U12CV3_check_cylinder, U12CV3_check_cube, U12CV3_check_sphere)
 
+# magie sulla tab
+objPosU12CV <- U12CV3_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone)', 'Cylinder(Clone)', 'Sphere(Clone)') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
+
+colnames(objPosU12CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+
+objPosU12CV %>%
+  mutate(Cube = case_when(
+    endsWith(Cube, "true") ~ 1,
+    endsWith(Cube, "false") ~ 0
+  ))
+
+```
+
+```{r}
+## ------------------- tabella con risutltati di tutti gli utenti -------------------
+objPosAllUsers <- rbind(objPosU01CV, objPosU02CV, objPosU03CV, 
+                        objPosU04CV, objPosU05CV, objPosU06CV, 
+                        objPosU07CV, objPosU08CV, objPosU09CV, 
+                        objPosU10CV, objPosU11CV, objPosU12CV)
+
+View(objPosAllUsers)
 
 
-
-
-## tabella finale
-CV3 <- rbind(U01CV3_check_total, U02CV3_check_total, U03CV3_check_total,
+## ------------------- tabella con tutti gli utenti -------------------
+CV3_allUsers <- rbind(U01CV3_check_total, U02CV3_check_total, U03CV3_check_total,
              U04CV3_check_total, U05CV3_check_total, U06CV3_check_total,
              U07CV3_check_total, U08CV3_check_total, U09CV3_check_total,
              U10CV3_check_total, U11CV3_check_total, U12CV3_check_total)
 
-#rinomino le colonne
-colnames(CV3) <- c('Date', 'OBJ Position', 'Utente')
+View(CV3_allUsers)
 
-# tab definitiva
-CV3_def <- read.csv("CV3_d.csv", encoding = "UTF-8")
-View(CV3_def)
-colnames(CV3_def) <- c('utente', 'data', 'ora', 'pos')
+# Creo colonna "pos"
+CV3_allUsers %>%
+  select(Utente, objPosition) %>%
+  mutate(Pos = case_when(
+    endsWith(objPosition, "true") ~ 1,
+    endsWith(objPosition, "false") ~ 0
+  ))
 
-CV3_def %%
-  rename(user = Utente)
+write.xlsx(CV3_allUsers, file = "CV3_allUsers.xlsx",
+           sheetName="CV3_allUsers", append=TRUE)
+```
 
-write.xlsx(CV3_def, file = "CV3____.xlsx",
-          sheetName = "CV3", append = FALSE)
+```{r}
+CV3 <- read.csv("CV3_d.csv", encoding = "UTF-8")
+View(CV3)
 
-#readxl::read_excel("C:/Users/Edoardo/Documents/HapticMemorySequence/CV3.xlsx",sheet = "CV3_def")
+CV3 %>%
+  select(Utente, PosizioneFinale)
 
-##CV3$PosixDate <- as.POSIXct(CV3$Date, tz = "UTC", format = "%Y-%m-%dT%H:%M:%S:%OSZ")
+View(CV3)
 
+```
+```{r}
+Cv3$z <- CV3$PosizioneFinale 
+```
 
-##CV3$MyDate <- as.Date(CV3$Date)
-
-##as.POSIXct(1.439165e+12/1000, origin = "1970-01-01", tz = "UTC")
