@@ -19,6 +19,7 @@ library("readxl")
 library("gapminder")
 library("convertr")
 library("zoo")
+library("magrittr") 
 ```
 
 ```{r}
@@ -29,9 +30,26 @@ U01CV3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/CV/Hap
 ## creo tabella contenente i movimenti della scatola rossa
 objInTheBoxU01CV3<-U01CV3[[1]][[1]]
 
-## creo tabella contenente le posizioni iniziali e finali degli oggetti
+## creo tabella contenente i movimenti degli oggetti
 objectsPositionU01CV3<-U01CV3[[2]][[1]]
-objectsPositionU01CV3$Utente <- "U01CV"
+View(objectsPositionU01CV3)
+objectsPositionU01CV3$Utente <- "U01CV" # aggiungo colonna con nome utente
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU01CV3 <- objectsPositionU01CV3 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU01CV3, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU01CV3.csv", row.names = FALSE)
+
+# copio e incollo in "U01CV" modifico a mano, mettendo su una riga e sostituisco / con :
+
+# U01CV.csv contiene nome, inizio, fine
+U01CV <- read.csv("U01CV.csv", encoding = "UTF-8")
+View(U01CV)
 
 ## creo tabella per ogni oggetto
 cylinderU01CV3 <- objectsPositionU01CV3[objectsPositionU01CV3$objPosition %like% "Cylinder", ]
@@ -59,13 +77,13 @@ objPosU01CV <- U01CV3_check_total %>%
 
 colnames(objPosU01CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
 
-objPosU01CV %>%
-  mutate(Cube = case_when(
-    endsWith(Cube, "true") ~ 1,
-    endsWith(Cube, "false") ~ 0
-  ))
+# unisco U01CV.csv creato prima con objPosU01CV
+U01CV3_final <- inner_join(objPosU01CV, U01CV, by="Utente")
+U01CV3_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
 
-
+# scrivo il file xlsx
+write.xlsx(U01CV3_final, file = "CV3_final.xlsx", sheetName="U01CV3_final", append=TRUE)
 ```
 
 ```{r}
@@ -80,6 +98,22 @@ objInTheBoxU02CV3<-U02CV3[[1]][[1]]
 objectsPositionU02CV3<-U02CV3[[2]][[1]]
 objectsPositionU02CV3$Utente <- "U02CV"
 
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU02CV3 <- objectsPositionU02CV3 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU02CV3, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU02CV3.csv", row.names = FALSE)
+
+# copio e incollo in "U02CV.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+
+# U02CV.csv contiene nome, inizio, fine
+U02CV <- read.csv("U02CV.csv", encoding = "UTF-8")
+View(U02CV)
+
 ## creo tabella per ogni oggetto
 cylinderU02CV3 <- objectsPositionU02CV3[objectsPositionU02CV3$objPosition %like% "Cylinder", ]
 cylinderU02CV3$Utente <- "U02CV"
@@ -87,12 +121,10 @@ cylinderU02CV3$Utente <- "U02CV"
 U02CV3_check_cylinder <- tail(cylinderU02CV3, n = 1)
 
 cubeU02CV3 <- objectsPositionU02CV3[objectsPositionU02CV3$objPosition %like% "Cube", ]
-cubeU02CV3$Utente <- "U02CV"
 ## controllo ultima posizione
 U02CV3_check_cube <- tail(cubeU02CV3, n = 1)
 
 sphereU02CV3 <- objectsPositionU02CV3[objectsPositionU02CV3$objPosition %like% "Sphere", ]
-sphereU02CV3$Utente <- "U02CV"
 ## controllo ultima posizione
 U02CV3_check_sphere <- tail(sphereU02CV3, n = 1)
 
@@ -108,12 +140,13 @@ objPosU02CV <- U02CV3_check_total %>%
 
 colnames(objPosU02CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
 
-objPosU02CV %>%
-  mutate(Cube = case_when(
-    endsWith(Cube, "true") ~ 1,
-    endsWith(Cube, "false") ~ 0
-  ))
+# unisco U02CV.csv creato prima con objPosU02CV
+U02CV3_final <- inner_join(objPosU02CV, U02CV, by="Utente")
+U02CV3_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
 
+# scrivo il file xlsx
+write.xlsx(U02CV3_final, file = "CV3_final.xlsx", sheetName="U02CV3_final", append=TRUE)
 ```
 
 ```{r}
@@ -128,6 +161,25 @@ objInTheBoxU03CV3<-U03CV3[[1]][[1]]
 objectsPositionU03CV3<-U03CV3[[2]][[1]]
 objectsPositionU03CV3$Utente <- "U03CV"
 
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU03CV3 <- objectsPositionU03CV3 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU03CV3, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU03CV3.csv", row.names = FALSE)
+
+# copio e incollo in "U03CV" modifico a mano, mettendo su una riga e sostituisco / con :
+
+```
+
+```{r}
+# U03CV.csv contiene nome, inizio, fine
+U03CV <- read.csv("U03CV.csv", encoding = "UTF-8")
+View(U03CV)
+
 ## creo tabella per ogni oggetto
 cylinderU03CV3 <- objectsPositionU03CV3[objectsPositionU03CV3$objPosition %like% "Cylinder", ]
 cylinderU03CV3$Utente <- "U03CV"
@@ -135,12 +187,10 @@ cylinderU03CV3$Utente <- "U03CV"
 U03CV3_check_cylinder <- tail(cylinderU03CV3, n = 1)
 
 cubeU03CV3 <- objectsPositionU03CV3[objectsPositionU03CV3$objPosition %like% "Cube", ]
-cubeU03CV3$Utente <- "U03CV"
 ## controllo ultima posizione
 U03CV3_check_cube <- tail(cubeU03CV3, n = 1)
 
 sphereU03CV3 <- objectsPositionU03CV3[objectsPositionU03CV3$objPosition %like% "Sphere", ]
-sphereU03CV3$Utente <- "U03CV"
 ## controllo ultima posizione
 U03CV3_check_sphere <- tail(sphereU03CV3, n = 1)
 
@@ -155,14 +205,19 @@ objPosU03CV <- U03CV3_check_total %>%
     mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
 
 colnames(objPosU03CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+```
 
-objPosU03CV %>%
-  mutate(Cube = case_when(
-    endsWith(Cube, "true") ~ 1,
-    endsWith(Cube, "false") ~ 0
-  ))
+```{r}
+# unisco U03CV.csv creato prima con objPosU03CV
+U03CV3_final <- inner_join(objPosU03CV, U03CV, by="Utente")
+U03CV3_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
+
+# scrivo il file xlsx
+write.xlsx(U03CV3_final, file = "CV3_final.xlsx", sheetName="U03CV32_final", append=TRUE)
 
 ```
+
 
 ```{r}
 ## ------------------- U04CV3 -------------------
@@ -175,6 +230,26 @@ objInTheBoxU04CV3<-U04CV3[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU04CV3<-U04CV3[[2]][[1]]
 objectsPositionU04CV3$Utente <- "U04CV"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU04CV3 <- objectsPositionU04CV3 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU04CV3, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU04CV3.csv", row.names = FALSE)
+
+# copio e incollo "inizioFineU04CV3.csv" in "U04CV" modifico a mano, mettendo su una riga e sostituisco / con :
+
+```
+
+```{r}
+# copio e incollo in "U04CV.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+# U04CV.csv contiene nome, inizio, fine
+U04CV <- read.csv("U04CV.csv", encoding = "UTF-8")
+View(U04CV)
 
 ## creo tabella per ogni oggetto
 cylinderU04CV3 <- objectsPositionU04CV3[objectsPositionU04CV3$objPosition %like% "Cylinder", ]
@@ -201,13 +276,16 @@ objPosU04CV <- U04CV3_check_total %>%
     mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
 
 colnames(objPosU04CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+```
 
-objPosU04CV %>%
-  mutate(Cube = case_when(
-    endsWith(Cube, "true") ~ 1,
-    endsWith(Cube, "false") ~ 0
-  ))
+```{r}
+# unisco U04CV.csv creato prima con objPosU04CV
+U04CV3_final <- inner_join(objPosU04CV, U04CV, by="Utente")
+U04CV3_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
 
+# scrivo il file xlsx
+write.xlsx(U04CV3_final, file = "CV3_final.xlsx", sheetName="U04CV3_final", append=TRUE)
 
 ```
 
@@ -222,6 +300,23 @@ objInTheBoxU05CV3<-U05CV3[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU05CV3<-U05CV3[[2]][[1]]
 objectsPositionU05CV3$Utente <- "U05CV"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU05CV3 <- objectsPositionU05CV3 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU05CV3, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU05CV3.csv", row.names = FALSE)
+```
+
+```{r}
+# copio e incollo in "U05CV.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+# U05CV.csv contiene nome, inizio, fine
+U05CV <- read.csv("U05CV.csv", encoding = "UTF-8")
+View(U05CV)
 
 ## creo tabella per ogni oggetto
 cylinderU05CV3 <- objectsPositionU05CV3[objectsPositionU05CV3$objPosition %like% "Cylinder", ]
@@ -248,13 +343,16 @@ objPosU05CV <- U05CV3_check_total %>%
     mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
 
 colnames(objPosU05CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+```
 
-objPosU05CV %>%
-  mutate(Cube = case_when(
-    endsWith(Cube, "true") ~ 1,
-    endsWith(Cube, "false") ~ 0
-  ))
+```{r}
+# unisco U05CV.csv creato prima con objPosU05CV
+U05CV3_final <- inner_join(objPosU05CV, U05CV, by="Utente")
+U05CV3_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
 
+# scrivo il file xlsx
+write.xlsx(U05CV3_final, file = "CV3_final.xlsx", sheetName="U05CV3_final", append=TRUE)
 
 ```
 
@@ -269,6 +367,23 @@ objInTheBoxU06CV3<-U06CV3[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU06CV3<-U06CV3[[2]][[1]]
 objectsPositionU06CV3$Utente <- "U06CV"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU06CV3 <- objectsPositionU06CV3 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU06CV3, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU06CV3.csv", row.names = FALSE)
+```
+
+```{r}
+# copio e incollo in "U06CV.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+# U06CV.csv contiene nome, inizio, fine
+U06CV <- read.csv("U06CV.csv", encoding = "UTF-8")
+View(U06CV)
 
 ## creo tabella per ogni oggetto
 cylinderU06CV3 <- objectsPositionU06CV3[objectsPositionU06CV3$objPosition %like% "Cylinder", ]
@@ -295,13 +410,16 @@ objPosU06CV <- U06CV3_check_total %>%
     mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
 
 colnames(objPosU06CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+```
 
-objPosU06CV %>%
-  mutate(Cube = case_when(
-    endsWith(Cube, "true") ~ 1,
-    endsWith(Cube, "false") ~ 0
-  ))
+```{r}
+# unisco U06CV.csv creato prima con objPosU06CV
+U06CV3_final <- inner_join(objPosU06CV, U06CV, by="Utente")
+U06CV3_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
 
+# scrivo il file xlsx
+write.xlsx(U06CV3_final, file = "CV3_final.xlsx", sheetName="U06CV3_final", append=TRUE)
 
 ```
 
@@ -316,6 +434,23 @@ objInTheBoxU07CV3<-U07CV3[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU07CV3<-U07CV3[[2]][[1]]
 objectsPositionU07CV3$Utente <- "U07CV"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU07CV3 <- objectsPositionU07CV3 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU07CV3, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU07CV3.csv", row.names = FALSE)
+```
+
+```{r}
+# copio e incollo in "U07CV.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+# U07CV.csv contiene nome, inizio, fine
+U07CV <- read.csv("U07CV.csv", encoding = "UTF-8")
+View(U07CV)
 
 ## creo tabella per ogni oggetto
 cylinderU07CV3 <- objectsPositionU07CV3[objectsPositionU07CV3$objPosition %like% "Cylinder", ]
@@ -342,12 +477,16 @@ objPosU07CV <- U07CV3_check_total %>%
     mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
 
 colnames(objPosU07CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+```
 
-objPosU07CV %>%
-  mutate(Cube = case_when(
-    endsWith(Cube, "true") ~ 1,
-    endsWith(Cube, "false") ~ 0
-  ))
+```{r}
+# unisco U07CV.csv creato prima con objPosU07CV
+U07CV3_final <- inner_join(objPosU07CV, U07CV, by="Utente")
+U07CV3_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
+
+# scrivo il file xlsx
+write.xlsx(U07CV3_final, file = "CV3_final.xlsx", sheetName="U07CV3_final", append=TRUE)
 
 ```
 
@@ -362,6 +501,23 @@ objInTheBoxU08CV3<-U08CV3[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU08CV3<-U08CV3[[2]][[1]]
 objectsPositionU08CV3$Utente <- "U08CV"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU08CV3 <- objectsPositionU08CV3 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU08CV3, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU08CV3.csv", row.names = FALSE)
+```
+
+```{r}
+# copio e incollo in "U08CV.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+# U08CV.csv contiene nome, inizio, fine
+U08CV <- read.csv("U08CV.csv", encoding = "UTF-8")
+View(U08CV)
 
 ## creo tabella per ogni oggetto
 cylinderU08CV3 <- objectsPositionU08CV3[objectsPositionU08CV3$objPosition %like% "Cylinder", ]
@@ -388,13 +544,16 @@ objPosU08CV <- U08CV3_check_total %>%
     mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
 
 colnames(objPosU08CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+```
 
-objPosU08CV %>%
-  mutate(Cube = case_when(
-    endsWith(Cube, "true") ~ 1,
-    endsWith(Cube, "false") ~ 0
-  ))
+```{r}
+# unisco U08CV.csv creato prima con objPosU08CV
+U08CV3_final <- inner_join(objPosU08CV, U08CV, by="Utente")
+U08CV3_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
 
+# scrivo il file xlsx
+write.xlsx(U08CV3_final, file = "CV3_final.xlsx", sheetName="U08CV3_final", append=TRUE)
 
 ```
 
@@ -409,6 +568,23 @@ objInTheBoxU09CV3<-U09CV3[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU09CV3<-U09CV3[[2]][[1]]
 objectsPositionU09CV3$Utente <- "U09CV"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU09CV3 <- objectsPositionU09CV3 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU09CV3, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU09CV3.csv", row.names = FALSE)
+```
+
+```{r}
+# copio e incollo in "U09CV.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+# U09CV.csv contiene nome, inizio, fine
+U09CV <- read.csv("U09CV.csv", encoding = "UTF-8")
+View(U09CV)
 
 ## creo tabella per ogni oggetto
 cylinderU09CV3 <- objectsPositionU09CV3[objectsPositionU09CV3$objPosition %like% "Cylinder", ]
@@ -435,13 +611,16 @@ objPosU09CV <- U09CV3_check_total %>%
     mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
 
 colnames(objPosU09CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+```
 
-objPosU09CV %>%
-  mutate(Cube = case_when(
-    endsWith(Cube, "true") ~ 1,
-    endsWith(Cube, "false") ~ 0
-  ))
+```{r}
+# unisco U09CV.csv creato prima con objPosU09CV
+U09CV3_final <- inner_join(objPosU09CV, U09CV, by="Utente")
+U09CV3_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
 
+# scrivo il file xlsx
+write.xlsx(U09CV3_final, file = "CV3_final.xlsx", sheetName="U09CV3_final", append=TRUE)
 
 ```
 
@@ -456,6 +635,23 @@ objInTheBoxU10CV3<-U10CV3[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU10CV3<-U10CV3[[2]][[1]]
 objectsPositionU10CV3$Utente <- "U10CV"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU10CV3 <- objectsPositionU10CV3 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU10CV3, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU10CV3.csv", row.names = FALSE)
+```
+
+```{r}
+# copio e incollo in "U10CV.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+# U10CV.csv contiene nome, inizio, fine
+U10CV <- read.csv("U10CV.csv", encoding = "UTF-8")
+View(U10CV)
 
 ## creo tabella per ogni oggetto
 cylinderU10CV3 <- objectsPositionU10CV3[objectsPositionU10CV3$objPosition %like% "Cylinder", ]
@@ -482,13 +678,16 @@ objPosU10CV <- U10CV3_check_total %>%
     mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
 
 colnames(objPosU10CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+```
 
-objPosU10CV %>%
-  mutate(Cube = case_when(
-    endsWith(Cube, "true") ~ 1,
-    endsWith(Cube, "false") ~ 0
-  ))
+```{r}
+# unisco U10CV.csv creato prima con objPosU10CV
+U10CV3_final <- inner_join(objPosU10CV, U10CV, by="Utente")
+U10CV3_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
 
+# scrivo il file xlsx
+write.xlsx(U10CV3_final, file = "CV3_final.xlsx", sheetName="U10CV3_final", append=TRUE)
 
 ```
 
@@ -503,6 +702,23 @@ objInTheBoxU11CV3<-U11CV3[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU11CV3<-U11CV3[[2]][[1]]
 objectsPositionU11CV3$Utente <- "U11CV"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU11CV3 <- objectsPositionU11CV3 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU11CV3, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU11CV3.csv", row.names = FALSE)
+```
+
+```{r}
+# copio e incollo in "U11CV.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+# U11CV.csv contiene nome, inizio, fine
+U11CV <- read.csv("U11CV.csv", encoding = "UTF-8")
+View(U11CV)
 
 ## creo tabella per ogni oggetto
 cylinderU11CV3 <- objectsPositionU11CV3[objectsPositionU11CV3$objPosition %like% "Cylinder", ]
@@ -529,13 +745,16 @@ objPosU11CV <- U11CV3_check_total %>%
     mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
 
 colnames(objPosU11CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+```
 
-objPosU11CV %>%
-  mutate(Cube = case_when(
-    endsWith(Cube, "true") ~ 1,
-    endsWith(Cube, "false") ~ 0
-  ))
+```{r}
+# unisco U11CV.csv creato prima con objPosU11CV
+U11CV3_final <- inner_join(objPosU11CV, U11CV, by="Utente")
+U11CV3_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
 
+# scrivo il file xlsx
+write.xlsx(U11CV3_final, file = "CV3_final.xlsx", sheetName="U11CV3_final", append=TRUE)
 
 ```
 
@@ -550,6 +769,23 @@ objInTheBoxU12CV3<-U12CV3[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU12CV3<-U12CV3[[2]][[1]]
 objectsPositionU12CV3$Utente <- "U12CV"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU12CV3 <- objectsPositionU12CV3 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU12CV3, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU12CV3.csv", row.names = FALSE)
+```
+
+```{r}
+# copio e incollo in "U12CV.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+# U12CV.csv contiene nome, inizio, fine
+U12CV <- read.csv("U12CV.csv", encoding = "UTF-8")
+View(U12CV)
 
 ## creo tabella per ogni oggetto
 cylinderU12CV3 <- objectsPositionU12CV3[objectsPositionU12CV3$objPosition %like% "Cylinder", ]
@@ -576,12 +812,16 @@ objPosU12CV <- U12CV3_check_total %>%
     mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
 
 colnames(objPosU12CV) <- c("Utente", "Cube", "Cylinder", "Sphere")
+```
 
-objPosU12CV %>%
-  mutate(Cube = case_when(
-    endsWith(Cube, "true") ~ 1,
-    endsWith(Cube, "false") ~ 0
-  ))
+```{r}
+# unisco U12CV.csv creato prima con objPosU12CV
+U12CV3_final <- inner_join(objPosU12CV, U12CV, by="Utente")
+U12CV3_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
+
+# scrivo il file xlsx
+write.xlsx(U12CV3_final, file = "CV3_final.xlsx", sheetName="U12CV3_final", append=TRUE)
 
 ```
 
@@ -613,19 +853,5 @@ CV3_allUsers %>%
 
 write.xlsx(CV3_allUsers, file = "CV3_allUsers.xlsx",
            sheetName="CV3_allUsers", append=TRUE)
-```
-
-```{r}
-CV3 <- read.csv("CV3_d.csv", encoding = "UTF-8")
-View(CV3)
-
-CV3 %>%
-  select(Utente, PosizioneFinale)
-
-View(CV3)
-
-```
-```{r}
-Cv3$z <- CV3$PosizioneFinale 
 ```
 
