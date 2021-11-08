@@ -74,7 +74,11 @@ U01SG5_check_total <- rbind(U01SG5_check_Cube2, U01SG5_check_Cylinder,
 
 # magie sulla tab
 objPosU01SG <- U01SG5_check_total %>%
-  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE)
+  
+colnames(objPosU01SG) <- c("timestamp", "object", "position", "Utente")
+
+objPosU01SG %>%
     spread(key = object, value = position) %>%
   select(Utente, 'Cube2(Clone)', 'Cylinder(Clone)', 'Cube(Clone):', 'Cylinder2(Clone)', 'Sphere(Clone)') %>%
   group_by(Utente) %>%

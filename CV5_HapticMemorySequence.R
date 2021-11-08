@@ -3,6 +3,7 @@ library("dplyr")
 library("tidyr")
 library("tidyverse")
 library("data.table")
+library("xlsx")
 
 ## ------------------- U01CV5 -------------------
 ## copio dati da JSON
@@ -14,6 +15,7 @@ objInTheBoxU01CV5<-U01CV5[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU01CV5<-U01CV5[[2]][[1]]
 objectsPositionU01CV5$Utente <- "U01CV"
+write.xlsx(objectsPositionU01CV5, file = "objectsPositionCV5.xlsx", sheetName="objectsPositionU01CV5", append=TRUE)
 
 ## creo tabella per ogni oggetto
 Cube2U01CV5 <- objectsPositionU01CV5[objectsPositionU01CV5$objPosition %like% "Cube2", ]
@@ -40,7 +42,7 @@ U01CV5_check_Sphere <- tail(SphereU01CV5, n = 1)
 U01CV5_check_total <- rbind(U01CV5_check_Cube2, U01CV5_check_Cylinder,
                             U01CV5_check_Cube, U01CV5_check_Cylinder2,
                             U01CV5_check_Sphere)
-
+write.xlsx(U01CV5_check_total, file = "objectsPositionCV5.xlsx", sheetName="U01CV5_check_total", append=TRUE)
 
 ## ------------------- U02CV5 -------------------
 ## copio dati da JSON
@@ -52,6 +54,7 @@ objInTheBoxU02CV5<-U02CV5[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU02CV5<-U02CV5[[2]][[1]]
 objectsPositionU02CV5$Utente <- "U02CV"
+write.xlsx(objectsPositionU02CV5, file = "objectsPositionCV5.xlsx", sheetName="objectsPositionU02CV5", append=TRUE)
 
 ## creo tabella per ogni oggetto
 Cube2U02CV5 <- objectsPositionU02CV5[objectsPositionU02CV5$objPosition %like% "Cube2", ]
@@ -78,6 +81,7 @@ U02CV5_check_Sphere <- tail(SphereU02CV5, n = 1)
 U02CV5_check_total <- rbind(U02CV5_check_Cube2, U02CV5_check_Cylinder,
                             U02CV5_check_Cube, U02CV5_check_Cylinder2,
                             U02CV5_check_Sphere)
+write.xlsx(U02CV5_check_total, file = "objectsPositionCV5.xlsx", sheetName="U02CV5_check_total", append=TRUE)
 
 
 ## ------------------- U03CV5 -------------------
@@ -90,6 +94,7 @@ objInTheBoxU03CV5<-U03CV5[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU03CV5<-U03CV5[[2]][[1]]
 objectsPositionU03CV5$Utente <- "U03CV"
+write.xlsx(objectsPositionU03CV5, file = "objectsPositionCV5.xlsx", sheetName="objectsPositionU03CV5", append=TRUE)
 
 ## creo tabella per ogni oggetto
 Cube2U03CV5 <- objectsPositionU03CV5[objectsPositionU03CV5$objPosition %like% "Cube2", ]
@@ -116,6 +121,7 @@ U03CV5_check_Sphere <- tail(SphereU03CV5, n = 1)
 U03CV5_check_total <- rbind(U03CV5_check_Cube2, U03CV5_check_Cylinder,
                             U03CV5_check_Cube, U03CV5_check_Cylinder2,
                             U03CV5_check_Sphere)
+write.xlsx(U03CV5_check_total, file = "objectsPositionCV5.xlsx", sheetName="U03CV5_check_total", append=TRUE)
 
 
 ## ------------------- U04CV5 -------------------
@@ -128,6 +134,7 @@ objInTheBoxU04CV5<-U04CV5[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU04CV5<-U04CV5[[2]][[1]]
 objectsPositionU04CV5$Utente <- "U04CV"
+write.xlsx(objectsPositionU04CV5, file = "objectsPositionCV5.xlsx", sheetName="objectsPositionU04CV5", append=TRUE)
 
 ## creo tabella per ogni oggetto
 Cube2U04CV5 <- objectsPositionU04CV5[objectsPositionU04CV5$objPosition %like% "Cube2", ]
@@ -154,6 +161,7 @@ U04CV5_check_Sphere <- tail(SphereU04CV5, n = 1)
 U04CV5_check_total <- rbind(U04CV5_check_Cube2, U04CV5_check_Cylinder,
                             U04CV5_check_Cube, U04CV5_check_Cylinder2,
                             U04CV5_check_Sphere)
+write.xlsx(U04CV5_check_total, file = "objectsPositionCV5.xlsx", sheetName="U04CV5_check_total", append=TRUE)
 
 
 ## ------------------- U05CV5 -------------------
@@ -166,6 +174,7 @@ objInTheBoxU05CV5<-U05CV5[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU05CV5<-U05CV5[[2]][[1]]
 objectsPositionU05CV5$Utente <- "U05CV"
+write.xlsx(objectsPositionU05CV5, file = "objectsPositionCV5.xlsx", sheetName="objectsPositionU05CV5", append=TRUE)
 
 ## creo tabella per ogni oggetto
 Cube2U05CV5 <- objectsPositionU05CV5[objectsPositionU05CV5$objPosition %like% "Cube2", ]
@@ -192,6 +201,7 @@ U05CV5_check_Sphere <- tail(SphereU05CV5, n = 1)
 U05CV5_check_total <- rbind(U05CV5_check_Cube2, U05CV5_check_Cylinder,
                             U05CV5_check_Cube, U05CV5_check_Cylinder2,
                             U05CV5_check_Sphere)
+write.xlsx(U05CV5_check_total, file = "objectsPositionCV5.xlsx", sheetName="U05CV5_check_total", append=TRUE)
 
 
 ## ------------------- U06CV5 -------------------
@@ -204,6 +214,7 @@ objInTheBoxU06CV5<-U06CV5[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU06CV5<-U06CV5[[2]][[1]]
 objectsPositionU06CV5$Utente <- "U06CV"
+write.xlsx(objectsPositionU06CV5, file = "objectsPositionCV5.xlsx", sheetName="objectsPositionU06CV5", append=TRUE)
 
 ## creo tabella per ogni oggetto
 Cube2U06CV5 <- objectsPositionU06CV5[objectsPositionU06CV5$objPosition %like% "Cube2", ]
@@ -230,6 +241,7 @@ U06CV5_check_Sphere <- tail(SphereU06CV5, n = 1)
 U06CV5_check_total <- rbind(U06CV5_check_Cube2, U06CV5_check_Cylinder,
                             U06CV5_check_Cube, U06CV5_check_Cylinder2,
                             U06CV5_check_Sphere)
+write.xlsx(U06CV5_check_total, file = "objectsPositionCV5.xlsx", sheetName="U06CV5_check_total", append=TRUE)
 
 
 ## ------------------- U07CV5 -------------------
@@ -242,6 +254,7 @@ objInTheBoxU07CV5<-U07CV5[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU07CV5<-U07CV5[[2]][[1]]
 objectsPositionU07CV5$Utente <- "U07CV"
+write.xlsx(objectsPositionU07CV5, file = "objectsPositionCV5.xlsx", sheetName="objectsPositionU07CV5", append=TRUE)
 
 ## creo tabella per ogni oggetto
 Cube2U07CV5 <- objectsPositionU07CV5[objectsPositionU07CV5$objPosition %like% "Cube2", ]
@@ -268,6 +281,7 @@ U07CV5_check_Sphere <- tail(SphereU07CV5, n = 1)
 U07CV5_check_total <- rbind(U07CV5_check_Cube2, U07CV5_check_Cylinder,
                             U07CV5_check_Cube, U07CV5_check_Cylinder2,
                             U07CV5_check_Sphere)
+write.xlsx(U07CV5_check_total, file = "objectsPositionCV5.xlsx", sheetName="U07CV5_check_total", append=TRUE)
 
 ## ------------------- U08CV5 -------------------
 ## copio dati da JSON
@@ -279,6 +293,7 @@ objInTheBoxU08CV5<-U08CV5[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU08CV5<-U08CV5[[2]][[1]]
 objectsPositionU08CV5$Utente <- "U08CV"
+write.xlsx(objectsPositionU08CV5, file = "objectsPositionCV5.xlsx", sheetName="objectsPositionU08CV5", append=TRUE)
 
 ## creo tabella per ogni oggetto
 Cube2U08CV5 <- objectsPositionU08CV5[objectsPositionU08CV5$objPosition %like% "Cube2", ]
@@ -305,6 +320,7 @@ U08CV5_check_Sphere <- tail(SphereU08CV5, n = 1)
 U08CV5_check_total <- rbind(U08CV5_check_Cube2, U08CV5_check_Cylinder,
                             U08CV5_check_Cube, U08CV5_check_Cylinder2,
                             U08CV5_check_Sphere)
+write.xlsx(U08CV5_check_total, file = "objectsPositionCV5.xlsx", sheetName="U08CV5_check_total", append=TRUE)
 
 
 ## ------------------- U09CV5 -------------------
@@ -317,6 +333,7 @@ objInTheBoxU09CV5<-U09CV5[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU09CV5<-U09CV5[[2]][[1]]
 objectsPositionU09CV5$Utente <- "U09CV"
+write.xlsx(objectsPositionU09CV5, file = "objectsPositionCV5.xlsx", sheetName="objectsPositionU09CV5", append=TRUE)
 
 ## creo tabella per ogni oggetto
 Cube2U09CV5 <- objectsPositionU09CV5[objectsPositionU09CV5$objPosition %like% "Cube2", ]
@@ -343,6 +360,7 @@ U09CV5_check_Sphere <- tail(SphereU09CV5, n = 1)
 U09CV5_check_total <- rbind(U09CV5_check_Cube2, U09CV5_check_Cylinder,
                             U09CV5_check_Cube, U09CV5_check_Cylinder2,
                             U09CV5_check_Sphere)
+write.xlsx(U09CV5_check_total, file = "objectsPositionCV5.xlsx", sheetName="U09CV5_check_total", append=TRUE)
 
 
 ## ------------------- U10CV5 -------------------
@@ -355,6 +373,7 @@ objInTheBoxU10CV5<-U10CV5[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU10CV5<-U10CV5[[2]][[1]]
 objectsPositionU10CV5$Utente <- "U10CV"
+write.xlsx(objectsPositionU10CV5, file = "objectsPositionCV5.xlsx", sheetName="objectsPositionU10CV5", append=TRUE)
 
 ## creo tabella per ogni oggetto
 Cube2U10CV5 <- objectsPositionU10CV5[objectsPositionU10CV5$objPosition %like% "Cube2", ]
@@ -381,6 +400,7 @@ U10CV5_check_Sphere <- tail(SphereU10CV5, n = 1)
 U10CV5_check_total <- rbind(U10CV5_check_Cube2, U10CV5_check_Cylinder,
                             U10CV5_check_Cube, U10CV5_check_Cylinder2,
                             U10CV5_check_Sphere)
+write.xlsx(U10CV5_check_total, file = "objectsPositionCV5.xlsx", sheetName="U10CV5_check_total", append=TRUE)
 
 
 ## ------------------- U11CV5 -------------------
@@ -393,6 +413,7 @@ objInTheBoxU11CV5<-U11CV5[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU11CV5<-U11CV5[[2]][[1]]
 objectsPositionU11CV5$Utente <- "U11CV"
+write.xlsx(objectsPositionU11CV5, file = "objectsPositionCV5.xlsx", sheetName="objectsPositionU11CV5", append=TRUE)
 
 ## creo tabella per ogni oggetto
 Cube2U11CV5 <- objectsPositionU11CV5[objectsPositionU11CV5$objPosition %like% "Cube2", ]
@@ -419,6 +440,7 @@ U11CV5_check_Sphere <- tail(SphereU11CV5, n = 1)
 U11CV5_check_total <- rbind(U11CV5_check_Cube2, U11CV5_check_Cylinder,
                             U11CV5_check_Cube, U11CV5_check_Cylinder2,
                             U11CV5_check_Sphere)
+write.xlsx(U11CV5_check_total, file = "objectsPositionCV5.xlsx", sheetName="U11CV5_check_total", append=TRUE)
 
 
 ## ------------------- U12CV5 -------------------
@@ -431,6 +453,7 @@ objInTheBoxU12CV5<-U12CV5[[1]][[1]]
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU12CV5<-U12CV5[[2]][[1]]
 objectsPositionU12CV5$Utente <- "U12CV"
+write.xlsx(objectsPositionU12CV5, file = "objectsPositionCV5.xlsx", sheetName="objectsPositionU12CV5", append=TRUE)
 
 ## creo tabella per ogni oggetto
 Cube2U12CV5 <- objectsPositionU12CV5[objectsPositionU12CV5$objPosition %like% "Cube2", ]
@@ -457,6 +480,7 @@ U12CV5_check_Sphere <- tail(SphereU12CV5, n = 1)
 U12CV5_check_total <- rbind(U12CV5_check_Cube2, U12CV5_check_Cylinder,
                             U12CV5_check_Cube, U12CV5_check_Cylinder2,
                             U12CV5_check_Sphere)
+write.xlsx(U12CV5_check_total, file = "objectsPositionCV5.xlsx", sheetName="U12CV5_check_total", append=TRUE)
 
 
 ## tabella finale
