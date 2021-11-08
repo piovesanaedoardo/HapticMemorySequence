@@ -1,0 +1,832 @@
+---
+title: "SG5"
+output: html_notebook
+---
+
+```{r}
+# librerie
+library("jsonlite")
+library("dplyr")
+library("tidyr")
+library("tidyverse")
+library("data.table")
+library("xlsx")
+library("readxl")
+library("gapminder")
+library("convertr")
+library("zoo")
+library("magrittr") 
+```
+
+```{r}
+## ------------------- U01SG5 -------------------
+## copio dati da JSON
+U01SG5 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_03_14_14_19_U01.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU01SG5<-U01SG5[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU01SG5<-U01SG5[[2]][[1]]
+objectsPositionU01SG5$Utente <- "U01SG"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU01SG5 <- objectsPositionU01SG5 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU01SG5, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU01SG5.csv", row.names = FALSE)
+```
+
+```{r}
+# copio e incollo in "U01SG.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+# U01SG.csv contiene nome, inizio, fine
+U01SG <- read.csv("U01SG.csv", encoding = "UTF-8")
+
+## creo tabella per ogni oggetto
+Cube2U01SG5 <- objectsPositionU01SG5[objectsPositionU01SG5$objPosition %like% "Cube2", ]
+Cube2U01SG5$Utente <- "U01SG"
+## controllo ultima posizione
+U01SG5_check_Cube2 <- tail(Cube2U01SG5, n = 1)
+
+CylinderU01SG5 <- objectsPositionU01SG5[objectsPositionU01SG5$objPosition %like% "Cylinder", ]
+## controllo ultima posizione
+U01SG5_check_Cylinder <- tail(CylinderU01SG5, n = 1)
+
+cubeU01SG5 <- objectsPositionU01SG5[objectsPositionU01SG5$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U01SG5_check_Cube <- tail(cubeU01SG5, n = 1)
+
+Cylinder2U01SG5 <- objectsPositionU01SG5[objectsPositionU01SG5$objPosition %like% "Cylinder2", ]
+## controllo ultima posizione
+U01SG5_check_Cylinder2 <- tail(Cylinder2U01SG5, n = 1)
+
+sphereU01SG5 <- objectsPositionU01SG5[objectsPositionU01SG5$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U01SG5_check_Sphere <- tail(sphereU01SG5, n = 1)
+
+U01SG5_check_total <- rbind(U01SG5_check_Cube2, U01SG5_check_Cylinder,
+                            U01SG5_check_Cube, U01SG5_check_Cylinder2,
+                            U01SG5_check_Sphere)
+
+# magie sulla tab
+objPosU01SG <- U01SG5_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube2(Clone)', 'Cylinder(Clone)', 'Cube(Clone):', 'Cylinder2(Clone)', 'Sphere(Clone)') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
+
+colnames(objPosU01SG) <- c("Utente", "Cube2", "Cylinder", "Cube", "Cylinder2", "Sphere")
+```
+
+```{r}
+# unisco U01SG.csv creato prima con objPosU01SG
+U01SG5_final <- inner_join(objPosU01SG, U01SG, by="Utente")
+U01SG5_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
+
+# scrivo il file xlsx
+write.xlsx(U01SG5_final, file = "SG5_final.xlsx", sheetName="U01SG5_final", append=TRUE)
+
+```
+
+
+```{r}
+## ------------------- U02SG5 -------------------
+## copio dati da JSON
+U02SG5 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_03_15_12_01_U02.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU02SG5<-U02SG5[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU02SG5<-U02SG5[[2]][[1]]
+objectsPositionU02SG5$Utente <- "U02SG"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU02SG5 <- objectsPositionU02SG5 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU02SG5, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU02SG5.csv", row.names = FALSE)
+
+# copio e incollo in "U02SG.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+
+# U02SG.csv contiene nome, inizio, fine
+U02SG <- read.csv("U02SG.csv", encoding = "UTF-8")
+View(U02SG)
+
+## creo tabella per ogni oggetto
+cylinderU02SG5 <- objectsPositionU02SG5[objectsPositionU02SG5$objPosition %like% "Cylinder", ]
+cylinderU02SG5$Utente <- "U02SG"
+## controllo ultima posizione
+U02SG5_check_cylinder <- tail(cylinderU02SG5, n = 1)
+
+cubeU02SG5 <- objectsPositionU02SG5[objectsPositionU02SG5$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U02SG5_check_cube <- tail(cubeU02SG5, n = 1)
+
+sphereU02SG5 <- objectsPositionU02SG5[objectsPositionU02SG5$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U02SG5_check_sphere <- tail(sphereU02SG5, n = 1)
+
+U02SG5_check_total <- rbind(U02SG5_check_cylinder, U02SG5_check_cube, U02SG5_check_sphere)
+
+# magie sulla tab
+objPosU02SG <- U02SG5_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone):', 'Cylinder(Clone):', 'Sphere(Clone):') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
+
+colnames(objPosU02SG) <- c("Utente", "Cube", "Cylinder", "Sphere")
+
+# unisco U02SG.csv creato prima con objPosU02SG
+U02SG5_final <- inner_join(objPosU02SG, U02SG, by="Utente")
+U02SG5_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
+
+# scrivo il file xlsx
+write.xlsx(U02SG5_final, file = "SG5_final.xlsx", sheetName="U02SG5_final", append=TRUE)
+```
+
+```{r}
+## ------------------- U03SG5 -------------------
+## copio dati da JSON
+U03SG5 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_03_16_18_36_U03.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU03SG5<-U03SG5[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU03SG5<-U03SG5[[2]][[1]]
+objectsPositionU03SG5$Utente <- "U03SG"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU03SG5 <- objectsPositionU03SG5 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU03SG5, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU03SG5.csv", row.names = FALSE)
+
+# copio e incollo in "U03SG" modifico a mano, mettendo su una riga e sostituisco / con :
+
+```
+
+```{r}
+# U03SG.csv contiene nome, inizio, fine
+U03SG <- read.csv("U03SG.csv", encoding = "UTF-8")
+View(U03SG)
+
+## creo tabella per ogni oggetto
+cylinderU03SG5 <- objectsPositionU03SG5[objectsPositionU03SG5$objPosition %like% "Cylinder", ]
+cylinderU03SG5$Utente <- "U03SG"
+## controllo ultima posizione
+U03SG5_check_cylinder <- tail(cylinderU03SG5, n = 1)
+
+cubeU03SG5 <- objectsPositionU03SG5[objectsPositionU03SG5$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U03SG5_check_cube <- tail(cubeU03SG5, n = 1)
+
+sphereU03SG5 <- objectsPositionU03SG5[objectsPositionU03SG5$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U03SG5_check_sphere <- tail(sphereU03SG5, n = 1)
+
+U03SG5_check_total <- rbind(U03SG5_check_cylinder, U03SG5_check_cube, U03SG5_check_sphere)
+
+# magie sulla tab
+objPosU03SG <- U03SG5_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone):', 'Cylinder(Clone):', 'Sphere(Clone):') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
+
+colnames(objPosU03SG) <- c("Utente", "Cube", "Cylinder", "Sphere")
+```
+
+```{r}
+# unisco U03SG.csv creato prima con objPosU03SG
+U03SG5_final <- inner_join(objPosU03SG, U03SG, by="Utente")
+U03SG5_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
+
+# scrivo il file xlsx
+write.xlsx(U03SG5_final, file = "SG5_final.xlsx", sheetName="U03SG52_final", append=TRUE)
+
+```
+
+
+```{r}
+## ------------------- U04SG5 -------------------
+## copio dati da JSON
+U04SG5 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_04_09_50_53_U04.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU04SG5<-U04SG5[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU04SG5<-U04SG5[[2]][[1]]
+objectsPositionU04SG5$Utente <- "U04SG"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU04SG5 <- objectsPositionU04SG5 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU04SG5, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU04SG5.csv", row.names = FALSE)
+
+# copio e incollo "inizioFineU04SG5.csv" in "U04SG" modifico a mano, mettendo su una riga e sostituisco / con :
+
+```
+
+```{r}
+# copio e incollo in "U04SG.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+# U04SG.csv contiene nome, inizio, fine
+U04SG <- read.csv("U04SG.csv", encoding = "UTF-8")
+View(U04SG)
+
+## creo tabella per ogni oggetto
+cylinderU04SG5 <- objectsPositionU04SG5[objectsPositionU04SG5$objPosition %like% "Cylinder", ]
+cylinderU04SG5$Utente <- "U04SG"
+## controllo ultima posizione
+U04SG5_check_cylinder <- tail(cylinderU04SG5, n = 1)
+
+cubeU04SG5 <- objectsPositionU04SG5[objectsPositionU04SG5$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U04SG5_check_cube <- tail(cubeU04SG5, n = 1)
+
+sphereU04SG5 <- objectsPositionU04SG5[objectsPositionU04SG5$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U04SG5_check_sphere <- tail(sphereU04SG5, n = 1)
+
+U04SG5_check_total <- rbind(U04SG5_check_cylinder, U04SG5_check_cube, U04SG5_check_sphere)
+
+# magie sulla tab
+objPosU04SG <- U04SG5_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone):', 'Cylinder(Clone):', 'Sphere(Clone):') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
+
+colnames(objPosU04SG) <- c("Utente", "Cube", "Cylinder", "Sphere")
+```
+
+```{r}
+# unisco U04SG.csv creato prima con objPosU04SG
+U04SG5_final <- inner_join(objPosU04SG, U04SG, by="Utente")
+U04SG5_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
+
+# scrivo il file xlsx
+write.xlsx(U04SG5_final, file = "SG5_final.xlsx", sheetName="U04SG5_final", append=TRUE)
+
+```
+
+```{r}
+## ------------------- U05SG5 -------------------
+## copio dati da JSON
+U05SG5 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_04_10_43_38_U05.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU05SG5<-U05SG5[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU05SG5<-U05SG5[[2]][[1]]
+objectsPositionU05SG5$Utente <- "U05SG"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU05SG5 <- objectsPositionU05SG5 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU05SG5, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU05SG5.csv", row.names = FALSE)
+```
+
+```{r}
+# copio e incollo in "U05SG.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+# U05SG.csv contiene nome, inizio, fine
+U05SG <- read.csv("U05SG.csv", encoding = "UTF-8")
+View(U05SG)
+
+## creo tabella per ogni oggetto
+cylinderU05SG5 <- objectsPositionU05SG5[objectsPositionU05SG5$objPosition %like% "Cylinder", ]
+cylinderU05SG5$Utente <- "U05SG"
+## controllo ultima posizione
+U05SG5_check_cylinder <- tail(cylinderU05SG5, n = 1)
+
+cubeU05SG5 <- objectsPositionU05SG5[objectsPositionU05SG5$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U05SG5_check_cube <- tail(cubeU05SG5, n = 1)
+
+sphereU05SG5 <- objectsPositionU05SG5[objectsPositionU05SG5$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U05SG5_check_sphere <- tail(sphereU05SG5, n = 1)
+
+U05SG5_check_total <- rbind(U05SG5_check_cylinder, U05SG5_check_cube, U05SG5_check_sphere)
+
+# magie sulla tab
+objPosU05SG <- U05SG5_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone):', 'Cylinder(Clone):', 'Sphere(Clone):') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
+
+colnames(objPosU05SG) <- c("Utente", "Cube", "Cylinder", "Sphere")
+```
+
+```{r}
+# unisco U05SG.csv creato prima con objPosU05SG
+U05SG5_final <- inner_join(objPosU05SG, U05SG, by="Utente")
+U05SG5_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
+
+# scrivo il file xlsx
+write.xlsx(U05SG5_final, file = "SG5_final.xlsx", sheetName="U05SG5_final", append=TRUE)
+
+```
+
+```{r}
+## ------------------- U06SG5 -------------------
+## copio dati da JSON
+U06SG5 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_04_11_18_54_U06.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU06SG5<-U06SG5[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU06SG5<-U06SG5[[2]][[1]]
+objectsPositionU06SG5$Utente <- "U06SG"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU06SG5 <- objectsPositionU06SG5 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU06SG5, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU06SG5.csv", row.names = FALSE)
+```
+
+```{r}
+# copio e incollo in "U06SG.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+# U06SG.csv contiene nome, inizio, fine
+U06SG <- read.csv("U06SG.csv", encoding = "UTF-8")
+View(U06SG)
+
+## creo tabella per ogni oggetto
+cylinderU06SG5 <- objectsPositionU06SG5[objectsPositionU06SG5$objPosition %like% "Cylinder", ]
+cylinderU06SG5$Utente <- "U06SG"
+## controllo ultima posizione
+U06SG5_check_cylinder <- tail(cylinderU06SG5, n = 1)
+
+cubeU06SG5 <- objectsPositionU06SG5[objectsPositionU06SG5$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U06SG5_check_cube <- tail(cubeU06SG5, n = 1)
+
+sphereU06SG5 <- objectsPositionU06SG5[objectsPositionU06SG5$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U06SG5_check_sphere <- tail(sphereU06SG5, n = 1)
+
+U06SG5_check_total <- rbind(U06SG5_check_cylinder, U06SG5_check_cube, U06SG5_check_sphere)
+
+# magie sulla tab
+objPosU06SG <- U06SG5_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone):', 'Cylinder(Clone):', 'Sphere(Clone):') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
+
+colnames(objPosU06SG) <- c("Utente", "Cube", "Cylinder", "Sphere")
+```
+
+```{r}
+# unisco U06SG.csv creato prima con objPosU06SG
+U06SG5_final <- inner_join(objPosU06SG, U06SG, by="Utente")
+U06SG5_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
+
+# scrivo il file xlsx
+write.xlsx(U06SG5_final, file = "SG5_final.xlsx", sheetName="U06SG5_final", append=TRUE)
+
+```
+
+```{r}
+## ------------------- U07SG5 -------------------
+## copio dati da JSON
+U07SG5 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_04_14_31_16_U07.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU07SG5<-U07SG5[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU07SG5<-U07SG5[[2]][[1]]
+objectsPositionU07SG5$Utente <- "U07SG"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU07SG5 <- objectsPositionU07SG5 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU07SG5, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU07SG5.csv", row.names = FALSE)
+```
+
+```{r}
+# copio e incollo in "U07SG.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+# U07SG.csv contiene nome, inizio, fine
+U07SG <- read.csv("U07SG.csv", encoding = "UTF-8")
+View(U07SG)
+
+## creo tabella per ogni oggetto
+cylinderU07SG5 <- objectsPositionU07SG5[objectsPositionU07SG5$objPosition %like% "Cylinder", ]
+cylinderU07SG5$Utente <- "U07SG"
+## controllo ultima posizione
+U07SG5_check_cylinder <- tail(cylinderU07SG5, n = 1)
+
+cubeU07SG5 <- objectsPositionU07SG5[objectsPositionU07SG5$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U07SG5_check_cube <- tail(cubeU07SG5, n = 1)
+
+sphereU07SG5 <- objectsPositionU07SG5[objectsPositionU07SG5$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U07SG5_check_sphere <- tail(sphereU07SG5, n = 1)
+
+U07SG5_check_total <- rbind(U07SG5_check_cylinder, U07SG5_check_cube, U07SG5_check_sphere)
+
+# magie sulla tab
+objPosU07SG <- U07SG5_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone)', 'Cylinder(Clone)', 'Sphere(Clone):') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
+
+colnames(objPosU07SG) <- c("Utente", "Cube", "Cylinder", "Sphere")
+```
+
+```{r}
+# unisco U07SG.csv creato prima con objPosU07SG
+U07SG5_final <- inner_join(objPosU07SG, U07SG, by="Utente")
+U07SG5_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
+
+# scrivo il file xlsx
+write.xlsx(U07SG5_final, file = "SG5_final.xlsx", sheetName="U07SG5_final", append=TRUE)
+
+```
+
+```{r}
+## ------------------- U08SG5 -------------------
+## copio dati da JSON
+U08SG5 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_04_15_23_42_U08.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU08SG5<-U08SG5[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU08SG5<-U08SG5[[2]][[1]]
+objectsPositionU08SG5$Utente <- "U08SG"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU08SG5 <- objectsPositionU08SG5 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU08SG5, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU08SG5.csv", row.names = FALSE)
+```
+
+```{r}
+# copio e incollo in "U08SG.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+# U08SG.csv contiene nome, inizio, fine
+U08SG <- read.csv("U08SG.csv", encoding = "UTF-8")
+
+## creo tabella per ogni oggetto
+cylinderU08SG5 <- objectsPositionU08SG5[objectsPositionU08SG5$objPosition %like% "Cylinder", ]
+cylinderU08SG5$Utente <- "U08SG"
+## controllo ultima posizione
+U08SG5_check_cylinder <- tail(cylinderU08SG5, n = 1)
+
+cubeU08SG5 <- objectsPositionU08SG5[objectsPositionU08SG5$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U08SG5_check_cube <- tail(cubeU08SG5, n = 1)
+
+sphereU08SG5 <- objectsPositionU08SG5[objectsPositionU08SG5$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U08SG5_check_sphere <- tail(sphereU08SG5, n = 1)
+
+U08SG5_check_total <- rbind(U08SG5_check_cylinder, U08SG5_check_cube, U08SG5_check_sphere)
+
+# magie sulla tab
+objPosU08SG <- U08SG5_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone):', 'Cylinder(Clone):', 'Sphere(Clone):') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
+
+colnames(objPosU08SG) <- c("Utente", "Cube", "Cylinder", "Sphere")
+```
+
+```{r}
+# unisco U08SG.csv creato prima con objPosU08SG
+U08SG5_final <- inner_join(objPosU08SG, U08SG, by="Utente")
+U08SG5_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
+
+# scrivo il file xlsx
+write.xlsx(U08SG5_final, file = "SG5_final.xlsx", sheetName="U08SG5_final", append=TRUE)
+
+```
+
+```{r}
+## ------------------- U09SG5 -------------------
+## copio dati da JSON
+U09SG5 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_04_16_35_25_U09.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU09SG5<-U09SG5[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU09SG5<-U09SG5[[2]][[1]]
+objectsPositionU09SG5$Utente <- "U09SG"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU09SG5 <- objectsPositionU09SG5 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU09SG5, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU09SG5.csv", row.names = FALSE)
+```
+
+```{r}
+# copio e incollo in "U09SG.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+# U09SG.csv contiene nome, inizio, fine
+U09SG <- read.csv("U09SG.csv", encoding = "UTF-8")
+
+
+## creo tabella per ogni oggetto
+cylinderU09SG5 <- objectsPositionU09SG5[objectsPositionU09SG5$objPosition %like% "Cylinder", ]
+cylinderU09SG5$Utente <- "U09SG"
+## controllo ultima posizione
+U09SG5_check_cylinder <- tail(cylinderU09SG5, n = 1)
+
+cubeU09SG5 <- objectsPositionU09SG5[objectsPositionU09SG5$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U09SG5_check_cube <- tail(cubeU09SG5, n = 1)
+
+sphereU09SG5 <- objectsPositionU09SG5[objectsPositionU09SG5$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U09SG5_check_sphere <- tail(sphereU09SG5, n = 1)
+
+U09SG5_check_total <- rbind(U09SG5_check_cylinder, U09SG5_check_cube, U09SG5_check_sphere)
+
+# magie sulla tab
+objPosU09SG <- U09SG5_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone):', 'Cylinder(Clone):', 'Sphere(Clone):') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
+
+colnames(objPosU09SG) <- c("Utente", "Cube", "Cylinder", "Sphere")
+```
+
+```{r}
+# unisco U09SG.csv creato prima con objPosU09SG
+U09SG5_final <- inner_join(objPosU09SG, U09SG, by="Utente")
+U09SG5_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
+
+# scrivo il file xlsx
+write.xlsx(U09SG5_final, file = "SG5_final.xlsx", sheetName="U09SG5_final", append=TRUE)
+
+```
+
+```{r}
+## ------------------- U10SG5 -------------------
+## copio dati da JSON
+U10SG5 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_05_09_37_17_U10.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU10SG5<-U10SG5[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU10SG5<-U10SG5[[2]][[1]]
+objectsPositionU10SG5$Utente <- "U10SG"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU10SG5 <- objectsPositionU10SG5 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU10SG5, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU10SG5.csv", row.names = FALSE)
+```
+
+```{r}
+# copio e incollo in "U10SG.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+# U10SG.csv contiene nome, inizio, fine
+U10SG <- read.csv("U10SG.csv", encoding = "UTF-8")
+
+## creo tabella per ogni oggetto
+cylinderU10SG5 <- objectsPositionU10SG5[objectsPositionU10SG5$objPosition %like% "Cylinder", ]
+cylinderU10SG5$Utente <- "U10SG"
+## controllo ultima posizione
+U10SG5_check_cylinder <- tail(cylinderU10SG5, n = 1)
+
+cubeU10SG5 <- objectsPositionU10SG5[objectsPositionU10SG5$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U10SG5_check_cube <- tail(cubeU10SG5, n = 1)
+
+sphereU10SG5 <- objectsPositionU10SG5[objectsPositionU10SG5$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U10SG5_check_sphere <- tail(sphereU10SG5, n = 1)
+
+U10SG5_check_total <- rbind(U10SG5_check_cylinder, U10SG5_check_cube, U10SG5_check_sphere)
+
+# magie sulla tab
+objPosU10SG <- U10SG5_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone):', 'Cylinder(Clone):', 'Sphere(Clone):') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
+
+colnames(objPosU10SG) <- c("Utente", "Cube", "Cylinder", "Sphere")
+```
+
+```{r}
+# unisco U10SG.csv creato prima con objPosU10SG
+U10SG5_final <- inner_join(objPosU10SG, U10SG, by="Utente")
+U10SG5_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
+
+# scrivo il file xlsx
+write.xlsx(U10SG5_final, file = "SG5_final.xlsx", sheetName="U10SG5_final", append=TRUE)
+
+```
+
+```{r}
+## ------------------- U11SG5 -------------------
+## copio dati da JSON
+U11SG5 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_05_11_12_04_U11.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU11SG5<-U11SG5[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU11SG5<-U11SG5[[2]][[1]]
+objectsPositionU11SG5$Utente <- "U11SG"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU11SG5 <- objectsPositionU11SG5 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU11SG5, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU11SG5.csv", row.names = FALSE)
+```
+
+```{r}
+# copio e incollo in "U11SG.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+# U11SG.csv contiene nome, inizio, fine
+U11SG <- read.csv("U11SG.csv", encoding = "UTF-8")
+
+
+## creo tabella per ogni oggetto
+cylinderU11SG5 <- objectsPositionU11SG5[objectsPositionU11SG5$objPosition %like% "Cylinder", ]
+cylinderU11SG5$Utente <- "U11SG"
+## controllo ultima posizione
+U11SG5_check_cylinder <- tail(cylinderU11SG5, n = 1)
+
+cubeU11SG5 <- objectsPositionU11SG5[objectsPositionU11SG5$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U11SG5_check_cube <- tail(cubeU11SG5, n = 1)
+
+sphereU11SG5 <- objectsPositionU11SG5[objectsPositionU11SG5$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U11SG5_check_sphere <- tail(sphereU11SG5, n = 1)
+
+U11SG5_check_total <- rbind(U11SG5_check_cylinder, U11SG5_check_cube, U11SG5_check_sphere)
+
+# magie sulla tab
+objPosU11SG <- U11SG5_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone):', 'Cylinder(Clone):', 'Sphere(Clone):') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
+
+colnames(objPosU11SG) <- c("Utente", "Cube", "Cylinder", "Sphere")
+```
+
+```{r}
+# unisco U11SG.csv creato prima con objPosU11SG
+U11SG5_final <- inner_join(objPosU11SG, U11SG, by="Utente")
+U11SG5_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
+
+# scrivo il file xlsx
+write.xlsx(U11SG5_final, file = "SG5_final.xlsx", sheetName="U11SG5_final", append=TRUE)
+
+```
+
+```{r}
+## ------------------- U12SG5 -------------------
+## copio dati da JSON
+U12SG5 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_05_11_38_07_U12.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU12SG5<-U12SG5[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU12SG5<-U12SG5[[2]][[1]]
+objectsPositionU12SG5$Utente <- "U12SG"
+
+## tabella primo e ultimo movimento per calcolare inizio e fine (1)
+inizioFineU12SG5 <- objectsPositionU12SG5 %>%
+  group_by(Utente) %>%
+  slice(c(1, n())) %>%
+  ungroup() %>%
+  select(Utente, timestamp)  # fin qua funziona tutto
+
+# creo file con primo e ultimo movimento
+write.csv(inizioFineU12SG5, "C:/Users/Edoardo/Documents/HapticMemorySequence/inizioFineU12SG5.csv", row.names = FALSE)
+```
+
+```{r}
+# copio e incollo in "U12SG.csv" modifico a mano, mettendo su una riga e sostituisco / con :
+# U12SG.csv contiene nome, inizio, fine
+U12SG <- read.csv("U12SG.csv", encoding = "UTF-8")
+
+## creo tabella per ogni oggetto
+cylinderU12SG5 <- objectsPositionU12SG5[objectsPositionU12SG5$objPosition %like% "Cylinder", ]
+cylinderU12SG5$Utente <- "U12SG"
+## controllo ultima posizione
+U12SG5_check_cylinder <- tail(cylinderU12SG5, n = 1)
+
+cubeU12SG5 <- objectsPositionU12SG5[objectsPositionU12SG5$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U12SG5_check_cube <- tail(cubeU12SG5, n = 1)
+
+sphereU12SG5 <- objectsPositionU12SG5[objectsPositionU12SG5$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U12SG5_check_sphere <- tail(sphereU12SG5, n = 1)
+
+U12SG5_check_total <- rbind(U12SG5_check_cylinder, U12SG5_check_cube, U12SG5_check_sphere)
+
+# magie sulla tab
+objPosU12SG <- U12SG5_check_total %>%
+  separate(objPosition, into = c("object", "position"), sep = " ", convert =  TRUE) %>%
+    spread(key = object, value = position) %>%
+  select(Utente, 'Cube(Clone):', 'Cylinder(Clone):', 'Sphere(Clone):') %>%
+  group_by(Utente) %>%
+    mutate_all(funs(na.locf(., na.rm = FALSE, fromLast = FALSE))) %>%filter(row_number()==n())
+
+colnames(objPosU12SG) <- c("Utente", "Cube", "Cylinder", "Sphere")
+```
+
+```{r}
+# unisco U12SG.csv creato prima con objPosU12SG
+U12SG5_final <- inner_join(objPosU12SG, U12SG, by="Utente")
+U12SG5_final %>%
+  select(Utente, Inizio, Fine, Cube, Cylinder, Sphere)
+
+# scrivo il file xlsx
+write.xlsx(U12SG5_final, file = "SG5_final.xlsx", sheetName="U12SG5_final", append=TRUE)
+
+```
