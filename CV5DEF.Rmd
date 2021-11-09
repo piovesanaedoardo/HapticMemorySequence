@@ -342,7 +342,7 @@ write.xlsx(objectsPositionU20CV5, file = "objectsPositionCV5.xlsx", sheetName="o
 ```{r}
 ## ------------------- U21CV5 -------------------
 ## copio dati da JSON
-U21CV5 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/CV/HapticMemorySequenceLog_2021_11_09_11_41_34_U21.json"))
+U21CV5 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/CV/HapticMemorySequenceLog_2021_11_09_15_05_13_U21.json"))
 
 ## creo tabella contenente i movimenti della scatola rossa
 objInTheBoxU21CV5<-U21CV5[[1]][[1]]
@@ -383,7 +383,7 @@ write.xlsx(objectsPositionU21CV5, file = "objectsPositionCV5.xlsx", sheetName="o
 ```{r}
 ## ------------------- U22CV5 -------------------
 ## copio dati da JSON
-U22CV5 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/CV/HapticMemorySequenceLog_2021_11_09_11_41_34_U22.json"))
+U22CV5 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/CV/HapticMemorySequenceLog_2021_11_09_16_26_53_U22.json"))
 
 ## creo tabella contenente i movimenti della scatola rossa
 objInTheBoxU22CV5<-U22CV5[[1]][[1]]
