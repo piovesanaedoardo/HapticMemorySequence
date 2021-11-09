@@ -1,0 +1,313 @@
+---
+title: "SG3DEF"
+output: html_notebook
+---
+
+```{r}
+library("jsonlite")
+library("dplyr")
+library("tidyr")
+library("tidyverse")
+library("data.table")
+library("xlsx")
+```
+
+```{r}
+## ------------------- U13SG3 -------------------
+## copio dati da JSON
+U13SG3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_08_11_09_37_U13.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU13SG3<-U13SG3[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU13SG3<-U13SG3[[2]][[1]]
+objectsPositionU13SG3$Utente <- "U13SG"
+
+CubeU13SG3 <- objectsPositionU13SG3[objectsPositionU13SG3$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U13SG3_check_Cube <- tail(CubeU13SG3, n = 1)
+
+CylinderU13SG3 <- objectsPositionU13SG3[objectsPositionU13SG3$objPosition %like% "Cylinder", ]
+## controllo ultima posizione
+U13SG3_check_Cylinder <- tail(CylinderU13SG3, n = 1)
+
+SphereU13SG3 <- objectsPositionU13SG3[objectsPositionU13SG3$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U13SG3_check_Sphere <- tail(SphereU13SG3, n = 1)
+
+U13SG3_check_total <- rbind(U13SG3_check_Cylinder,U13SG3_check_Cube, U13SG3_check_Sphere)
+
+write.xlsx(U13SG3_check_total, file = "objectsPositionSG3.xlsx", sheetName="U13SG3_check_total", append=TRUE)
+write.xlsx(objectsPositionU13SG3, file = "objectsPositionSG3.xlsx", sheetName="objectsPositionU13SG3", append=TRUE)
+```
+
+```{r}
+## ------------------- U14SG3 -------------------
+## copio dati da JSON
+U14SG3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_08_11_32_36_U14.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU14SG3<-U14SG3[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU14SG3<-U14SG3[[2]][[1]]
+objectsPositionU14SG3$Utente <- "U14SG"
+
+CubeU14SG3 <- objectsPositionU14SG3[objectsPositionU14SG3$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U14SG3_check_Cube <- tail(CubeU14SG3, n = 1)
+
+CylinderU14SG3 <- objectsPositionU14SG3[objectsPositionU14SG3$objPosition %like% "Cylinder", ]
+## controllo ultima posizione
+U14SG3_check_Cylinder <- tail(CylinderU14SG3, n = 1)
+
+SphereU14SG3 <- objectsPositionU14SG3[objectsPositionU14SG3$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U14SG3_check_Sphere <- tail(SphereU14SG3, n = 1)
+
+U14SG3_check_total <- rbind(U14SG3_check_Cube, U14SG3_check_Cylinder, U14SG3_check_Sphere)
+
+write.xlsx(U14SG3_check_total, file = "objectsPositionSG3.xlsx", sheetName="U14SG3_check_total", append=TRUE)
+write.xlsx(objectsPositionU14SG3, file = "objectsPositionSG3.xlsx", sheetName="objectsPositionU14SG3", append=TRUE)
+```
+
+```{r}
+## ------------------- U15SG3 -------------------
+## copio dati da JSON
+U15SG3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_08_15_31_26_U15.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU15SG3<-U15SG3[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU15SG3<-U15SG3[[2]][[1]]
+objectsPositionU15SG3$Utente <- "U15SG"
+
+CubeU15SG3 <- objectsPositionU15SG3[objectsPositionU15SG3$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U15SG3_check_Cube <- tail(CubeU15SG3, n = 1)
+
+CylinderU15SG3 <- objectsPositionU15SG3[objectsPositionU15SG3$objPosition %like% "Cylinder", ]
+## controllo ultima posizione
+U15SG3_check_Cylinder <- tail(CylinderU15SG3, n = 1)
+
+SphereU15SG3 <- objectsPositionU15SG3[objectsPositionU15SG3$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U15SG3_check_Sphere <- tail(SphereU15SG3, n = 1)
+
+U15SG3_check_total <- rbind(U15SG3_check_Cube, U15SG3_check_Cylinder, U15SG3_check_Sphere)
+
+write.xlsx(U15SG3_check_total, file = "objectsPositionSG3.xlsx", sheetName="U15SG3_check_total", append=TRUE)
+write.xlsx(objectsPositionU15SG3, file = "objectsPositionSG3.xlsx", sheetName="objectsPositionU15SG3", append=TRUE)
+```
+
+```{r}
+## ------------------- U16SG3 -------------------
+## copio dati da JSON
+U16SG3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_08_16_16_55_U16.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU16SG3<-U16SG3[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU16SG3<-U16SG3[[2]][[1]]
+objectsPositionU16SG3$Utente <- "U16SG"
+
+CubeU16SG3 <- objectsPositionU16SG3[objectsPositionU16SG3$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U16SG3_check_Cube <- tail(CubeU16SG3, n = 1)
+
+CylinderU16SG3 <- objectsPositionU16SG3[objectsPositionU16SG3$objPosition %like% "Cylinder", ]
+## controllo ultima posizione
+U16SG3_check_Cylinder <- tail(CylinderU16SG3, n = 1)
+
+SphereU16SG3 <- objectsPositionU16SG3[objectsPositionU16SG3$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U16SG3_check_Sphere <- tail(SphereU16SG3, n = 1)
+
+U16SG3_check_total <- rbind(U16SG3_check_Cube, U16SG3_check_Cylinder, U16SG3_check_Sphere)
+
+write.xlsx(U16SG3_check_total, file = "objectsPositionSG3.xlsx", sheetName="U16SG3_check_total", append=TRUE)
+write.xlsx(objectsPositionU16SG3, file = "objectsPositionSG3.xlsx", sheetName="objectsPositionU16SG3", append=TRUE)
+```
+
+```{r}
+## ------------------- U17SG3 -------------------
+## copio dati da JSON
+U17SG3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_09_09_46_23_U17.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU17SG3<-U17SG3[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU17SG3<-U17SG3[[2]][[1]]
+objectsPositionU17SG3$Utente <- "U17SG"
+
+CubeU17SG3 <- objectsPositionU17SG3[objectsPositionU17SG3$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U17SG3_check_Cube <- tail(CubeU17SG3, n = 1)
+
+CylinderU17SG3 <- objectsPositionU17SG3[objectsPositionU17SG3$objPosition %like% "Cylinder", ]
+## controllo ultima posizione
+U17SG3_check_Cylinder <- tail(CylinderU17SG3, n = 1)
+
+SphereU17SG3 <- objectsPositionU17SG3[objectsPositionU17SG3$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U17SG3_check_Sphere <- tail(SphereU17SG3, n = 1)
+
+U17SG3_check_total <- rbind(U17SG3_check_Cube, U17SG3_check_Cylinder, U17SG3_check_Sphere)
+
+write.xlsx(U17SG3_check_total, file = "objectsPositionSG3.xlsx", sheetName="U17SG3_check_total", append=TRUE)
+write.xlsx(objectsPositionU17SG3, file = "objectsPositionSG3.xlsx", sheetName="objectsPositionU17SG3", append=TRUE)
+```
+
+```{r}
+## ------------------- U18SG3 -------------------
+## copio dati da JSON
+U18SG3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_09_10_31_28_U18.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU18SG3<-U18SG3[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU18SG3<-U18SG3[[2]][[1]]
+objectsPositionU18SG3$Utente <- "U18SG"
+
+CubeU18SG3 <- objectsPositionU18SG3[objectsPositionU18SG3$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U18SG3_check_Cube <- tail(CubeU18SG3, n = 1)
+
+CylinderU18SG3 <- objectsPositionU18SG3[objectsPositionU18SG3$objPosition %like% "Cylinder", ]
+## controllo ultima posizione
+U18SG3_check_Cylinder <- tail(CylinderU18SG3, n = 1)
+
+SphereU18SG3 <- objectsPositionU18SG3[objectsPositionU18SG3$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U18SG3_check_Sphere <- tail(SphereU18SG3, n = 1)
+
+U18SG3_check_total <- rbind(U18SG3_check_Cube, U18SG3_check_Cylinder, U18SG3_check_Sphere)
+
+write.xlsx(U18SG3_check_total, file = "objectsPositionSG3.xlsx", sheetName="U18SG3_check_total", append=TRUE)
+write.xlsx(objectsPositionU18SG3, file = "objectsPositionSG3.xlsx", sheetName="objectsPositionU18SG3", append=TRUE)
+```
+
+```{r}
+## ------------------- U19SG3 -------------------
+## copio dati da JSON
+U19SG3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_09_11_57_38_U19.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU19SG3<-U19SG3[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU19SG3<-U19SG3[[2]][[1]]
+objectsPositionU19SG3$Utente <- "U19SG"
+
+CubeU19SG3 <- objectsPositionU19SG3[objectsPositionU19SG3$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U19SG3_check_Cube <- tail(CubeU19SG3, n = 1)
+
+CylinderU19SG3 <- objectsPositionU19SG3[objectsPositionU19SG3$objPosition %like% "Cylinder", ]
+## controllo ultima posizione
+U19SG3_check_Cylinder <- tail(CylinderU19SG3, n = 1)
+
+SphereU19SG3 <- objectsPositionU19SG3[objectsPositionU19SG3$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U19SG3_check_Sphere <- tail(SphereU19SG3, n = 1)
+
+U19SG3_check_total <- rbind(U19SG3_check_Cube, U19SG3_check_Cylinder, U19SG3_check_Sphere)
+
+write.xlsx(U19SG3_check_total, file = "objectsPositionSG3.xlsx", sheetName="U19SG3_check_total", append=TRUE)
+write.xlsx(objectsPositionU19SG3, file = "objectsPositionSG3.xlsx", sheetName="objectsPositionU19SG3", append=TRUE)
+```
+
+```{r}
+## ------------------- U20SG3 -------------------
+## copio dati da JSON
+U20SG3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_09_14_05_43_U20.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU20SG3<-U20SG3[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU20SG3<-U20SG3[[2]][[1]]
+objectsPositionU20SG3$Utente <- "U20SG"
+
+CubeU20SG3 <- objectsPositionU20SG3[objectsPositionU20SG3$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U20SG3_check_Cube <- tail(CubeU20SG3, n = 1)
+
+CylinderU20SG3 <- objectsPositionU20SG3[objectsPositionU20SG3$objPosition %like% "Cylinder", ]
+## controllo ultima posizione
+U20SG3_check_Cylinder <- tail(CylinderU20SG3, n = 1)
+
+SphereU20SG3 <- objectsPositionU20SG3[objectsPositionU20SG3$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U20SG3_check_Sphere <- tail(SphereU20SG3, n = 1)
+
+U20SG3_check_total <- rbind(U20SG3_check_Cube, U20SG3_check_Cylinder, U20SG3_check_Sphere)
+
+write.xlsx(U20SG3_check_total, file = "objectsPositionSG3.xlsx", sheetName="U20SG3_check_total", append=TRUE)
+write.xlsx(objectsPositionU20SG3, file = "objectsPositionSG3.xlsx", sheetName="objectsPositionU20SG3", append=TRUE)
+```
+
+```{r}
+## ------------------- U21SG3 -------------------
+## copio dati da JSON
+U21SG3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_09_15_18_57_U21.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU21SG3<-U21SG3[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU21SG3<-U21SG3[[2]][[1]]
+objectsPositionU21SG3$Utente <- "U21SG"
+
+CubeU21SG3 <- objectsPositionU21SG3[objectsPositionU21SG3$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U21SG3_check_Cube <- tail(CubeU21SG3, n = 1)
+
+CylinderU21SG3 <- objectsPositionU21SG3[objectsPositionU21SG3$objPosition %like% "Cylinder", ]
+## controllo ultima posizione
+U21SG3_check_Cylinder <- tail(CylinderU21SG3, n = 1)
+
+SphereU21SG3 <- objectsPositionU21SG3[objectsPositionU21SG3$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U21SG3_check_Sphere <- tail(SphereU21SG3, n = 1)
+
+U21SG3_check_total <- rbind(U21SG3_check_Cube, U21SG3_check_Cylinder, U21SG3_check_Sphere)
+
+write.xlsx(U21SG3_check_total, file = "objectsPositionSG3.xlsx", sheetName="U21SG3_check_total", append=TRUE)
+write.xlsx(objectsPositionU21SG3, file = "objectsPositionSG3.xlsx", sheetName="objectsPositionU21SG3", append=TRUE)
+```
+
+```{r}
+## ------------------- U22SG3 -------------------
+## copio dati da JSON
+U22SG3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_09_16_12_22_U22.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU22SG3<-U22SG3[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU22SG3<-U22SG3[[2]][[1]]
+objectsPositionU22SG3$Utente <- "U22SG"
+
+CubeU22SG3 <- objectsPositionU22SG3[objectsPositionU22SG3$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U22SG3_check_Cube <- tail(CubeU22SG3, n = 1)
+
+CylinderU22SG3 <- objectsPositionU22SG3[objectsPositionU22SG3$objPosition %like% "Cylinder", ]
+## controllo ultima posizione
+U22SG3_check_Cylinder <- tail(CylinderU22SG3, n = 1)
+
+SphereU22SG3 <- objectsPositionU22SG3[objectsPositionU22SG3$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U22SG3_check_Sphere <- tail(SphereU22SG3, n = 1)
+
+U22SG3_check_total <- rbind(U22SG3_check_Cube, U22SG3_check_Cylinder, U22SG3_check_Sphere)
+
+write.xlsx(U22SG3_check_total, file = "objectsPositionSG3.xlsx", sheetName="U22SG3_check_total", append=TRUE)
+write.xlsx(objectsPositionU22SG3, file = "objectsPositionSG3.xlsx", sheetName="objectsPositionU22SG3", append=TRUE)
+```
