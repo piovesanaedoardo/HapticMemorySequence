@@ -1720,7 +1720,7 @@ U27SG10_check_Capsule2 <- tail(Capsule2U27SG10, n = 1)
 
 Cylinder2U27SG10 <- objectsPositionU27SG10[objectsPositionU27SG10$objPosition %like% "Cylinder2", ]
 ## controllo ultima posizione
-U27SG10_check_Cylinder2 <- tail(Cylinder2U27SG10, n = 1) 
+U27SG10_check_Cylinder2 <- tail(Cylinder2U27SG10, n = 1)
 
 SphereU27SG10 <- objectsPositionU27SG10[objectsPositionU27SG10$objPosition %like% "Sphere", ]
 ## controllo ultima posizione
