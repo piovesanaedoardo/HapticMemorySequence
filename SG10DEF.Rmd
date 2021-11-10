@@ -1678,7 +1678,7 @@ write.xlsx(objectsPositionU26SG10, file = "objectsPositionSG10.xlsx", sheetName=
 ```{r}
 ## ------------------- U27SG10 -------------------
 ## copio dati da JSON
-U27SG10 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_03_14_15_40_U27.json"))
+U27SG10 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/SG/HapticMemorySequenceLog_2021_11_10_16_23_10_U27.json"))
 
 ## creo tabella contenente i movimenti della scatola rossa
 objInTheBoxU27SG10<-U27SG10[[1]][[1]]
