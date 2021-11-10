@@ -173,9 +173,7 @@ write.csv(inizioFineU03CV3, "C:/Users/Edoardo/Documents/HapticMemorySequence/ini
 
 # copio e incollo in "U03CV" modifico a mano, mettendo su una riga e sostituisco / con :
 
-```
 
-```{r}
 # U03CV.csv contiene nome, inizio, fine
 U03CV <- read.csv("U03CV.csv", encoding = "UTF-8")
 View(U03CV)
@@ -1132,4 +1130,34 @@ U22cv3_check_total <- rbind(U22cv3_check_Cylinder,U22cv3_check_Cube, U22cv3_chec
 
 write.xlsx(U22cv3_check_total, file = "objectsPositioncv3.xlsx", sheetName="U22cv3_check_total", append=TRUE)
 write.xlsx(objectsPositionU22cv3, file = "objectsPositioncv3.xlsx", sheetName="objectsPositionU22cv3", append=TRUE)
+```
+
+```{r}
+## ------------------- U23cv3 -------------------
+## copio dati da JSON
+U23cv3 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/CV/HapticMemorySequenceLog_2021_11_10_09_39_43_U23.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU23cv3<-U23cv3[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU23cv3<-U23cv3[[2]][[1]]
+objectsPositionU23cv3$Utente <- "U23CV"
+
+CylinderU23cv3 <- objectsPositionU23cv3[objectsPositionU23cv3$objPosition %like% "Cylinder", ]
+## controllo ultima posizione
+U23cv3_check_Cylinder <- tail(CylinderU23cv3, n = 1)
+
+CubeU23cv3 <- objectsPositionU23cv3[objectsPositionU23cv3$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U23cv3_check_Cube <- tail(CubeU23cv3, n = 1)
+
+SphereU23cv3 <- objectsPositionU23cv3[objectsPositionU23cv3$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U23cv3_check_Sphere <- tail(SphereU23cv3, n = 1)
+
+U23cv3_check_total <- rbind(U23cv3_check_Cylinder,U23cv3_check_Cube, U23cv3_check_Sphere)
+
+write.xlsx(U23cv3_check_total, file = "objectsPositioncv3.xlsx", sheetName="U23cv3_check_total", append=TRUE)
+write.xlsx(objectsPositionU23cv3, file = "objectsPositioncv3.xlsx", sheetName="objectsPositionU23cv3", append=TRUE)
 ```

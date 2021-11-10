@@ -420,3 +420,44 @@ U22CV5_check_total <- rbind(U22CV5_check_Cube2, U22CV5_check_Cylinder,
 write.xlsx(U22CV5_check_total, file = "objectsPositionCV5.xlsx", sheetName="U22CV5_check_total", append=TRUE)
 write.xlsx(objectsPositionU22CV5, file = "objectsPositionCV5.xlsx", sheetName="objectsPositionU22CV5", append=TRUE)
 ```
+
+```{r}
+## ------------------- U23CV5 -------------------
+## copio dati da JSON
+U23CV5 <- as_tibble(fromJSON("G:/Il mio Drive/Università/20_21_Tesi/JSON/CV/HapticMemorySequenceLog_2021_11_10_09_40_29_U23.json"))
+
+## creo tabella contenente i movimenti della scatola rossa
+objInTheBoxU23CV5<-U23CV5[[1]][[1]]
+
+## creo tabella contenente le posizioni iniziali e finali degli oggetti
+objectsPositionU23CV5<-U23CV5[[2]][[1]]
+objectsPositionU23CV5$Utente <- "U23CV"
+
+## creo tabella per ogni oggetto
+Cube2U23CV5 <- objectsPositionU23CV5[objectsPositionU23CV5$objPosition %like% "Cube2", ]
+Cube2U23CV5$Utente <- "U23CV"
+## controllo ultima posizione
+U23CV5_check_Cube2 <- tail(Cube2U23CV5, n = 1)
+
+CylinderU23CV5 <- objectsPositionU23CV5[objectsPositionU23CV5$objPosition %like% "Cylinder", ]
+## controllo ultima posizione
+U23CV5_check_Cylinder <- tail(CylinderU23CV5, n = 1)
+
+CubeU23CV5 <- objectsPositionU23CV5[objectsPositionU23CV5$objPosition %like% "Cube", ]
+## controllo ultima posizione
+U23CV5_check_Cube <- tail(CubeU23CV5, n = 1)
+
+Cylinder2U23CV5 <- objectsPositionU23CV5[objectsPositionU23CV5$objPosition %like% "Cylinder2", ]
+## controllo ultima posizione
+U23CV5_check_Cylinder2 <- tail(Cylinder2U23CV5, n = 1)
+
+SphereU23CV5 <- objectsPositionU23CV5[objectsPositionU23CV5$objPosition %like% "Sphere", ]
+## controllo ultima posizione
+U23CV5_check_Sphere <- tail(SphereU23CV5, n = 1)
+
+U23CV5_check_total <- rbind(U23CV5_check_Cube2, U23CV5_check_Cylinder,
+                            U23CV5_check_Cube, U23CV5_check_Cylinder2,
+                            U23CV5_check_Sphere)
+write.xlsx(U23CV5_check_total, file = "objectsPositionCV5.xlsx", sheetName="U23CV5_check_total", append=TRUE)
+write.xlsx(objectsPositionU23CV5, file = "objectsPositionCV5.xlsx", sheetName="objectsPositionU23CV5", append=TRUE)
+```
