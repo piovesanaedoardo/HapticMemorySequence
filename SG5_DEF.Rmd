@@ -973,11 +973,11 @@ objInTheBoxU24SG5<-U24SG5[[1]][[1]]
 
 ## creo tabella contenente le posizioni iniziali e finali degli oggetti
 objectsPositionU24SG5<-U24SG5[[2]][[1]]
-objectsPositionU24SG5$Utente <- "U24SG"
+objectsPositionU24SG5$Utente <- "U24SG5"
 
 ## creo tabella per ogni oggetto
 Cube2U24SG5 <- objectsPositionU24SG5[objectsPositionU24SG5$objPosition %like% "Cube2", ]
-Cube2U24SG5$Utente <- "U24SG"
+Cube2U24SG5$Utente <- "U24SG5"
 ## controllo ultima posizione
 U24SG5_check_Cube2 <- tail(Cube2U24SG5, n = 1)
 
